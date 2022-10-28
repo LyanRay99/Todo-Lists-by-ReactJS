@@ -2,7 +2,7 @@ import React from 'react';
 import { TodoApp, InputTodo, Lists } from './TODO_APP/TodoApp';
 import { AppEffect, SetColor } from './TODO_APP/TodoApp';
 import { v4 } from 'uuid'
-import '../src/CSS/style.css';
+import '../src/CSS/style.css'
 
 //TODO: CLASS COMPONENT
 class App extends React.Component {
