@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+$bgc: rgb(84, 80, 80);
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+body {
+  background-color: black;
+}
+
+section {
+  @include size(300px, 500px);
+  margin: 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+
+  .app__node {
+    @include size(94%, 96%);
+    padding: 20px;
+    border-radius: 20px;
+    background-color: black;
+    background-color: $bgc;
+    position: absolute;
+    top: 2%;
+    left: 3%;
+    z-index: 2;
+    // overflow: scroll;
+
+    .title {
+      text-align: center;
+      // color: white;
+      // position: fixed;
+    }
+
+    .inputTodo {
+      @include size(100%, 30px);
+      margin: 20px 0px;
+      border-radius: 20px;
+
+      input {
+        @include size(80%, 100%);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        padding: 0px 10px;
+        outline: none;
+        border: none;
+      }
+
+      button {
+        @include size(20%, 100%);
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: none;
+        background-color: greenyellow;
+        color: $bgc;
+        font-size: 0.8em;
+        font-weight: bold;
+      }
+    }
+
+    .lists {
+      @include size(100%, 80%);
+      // background-color: rebeccapurple;
+      padding: 5px 10px;
+      overflow: auto;
+
+      &__node {
+        @include size(100%, 30px);
+        display: flex;
+
+        input {
+          @include size(8%, auto);
+        }
+
+        p {
+          @include size(80%, auto);
+          margin: 0px 10px;
+          font-weight: bold;
+          color: white;
+          line-height: 30px;
+        }
+
+        div {
+          color: white;
+          font-weight: bold;
+          font-size: 1.5em;
+          margin: -5px 0px 0px 0px;
+        }
+      }
+    }
+
+    .setColor {
+      @include size(100%, 25px);
+      display: flex;
+      justify-content: space-around;
+
+      button {
+        @include size(48%, 100%);
+        border: none;
+        border-radius: 10px;
+        background-color: greenyellow;
+        color: black;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .effect {
+    @include size(200%, 200%);
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    top: -250px;
+    left: -150px;
+    z-index: 1;
+    animation: appEffect 4s linear infinite;
+
+    span {
+      @include size(50%, 50%);
+    }
+
+    &__bgc {
+      background-color: greenyellow;
+    }
+
+    &__black {
+      background-color: black;
+    }
+  }
+}
+
+@keyframes appEffect {
+  to {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(360deg);
+  }
+}
