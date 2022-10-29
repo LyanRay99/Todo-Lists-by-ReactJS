@@ -10,7 +10,7 @@ export const App = () => {
     title: 'TODO APP',
     colorTitle: 'red',
   })
-  const [colorEffect, setColorEffects] = useState('aqua')
+  var [colorEffect, setColorEffects] = useState('aqua')
   const [state, setTodo] = useState(
     {
       todo: [{
@@ -34,11 +34,11 @@ export const App = () => {
       ]
     })
 
-  //TODO: Check UseEffect
+  //TODO: Test UseEffect
   // useEffect(
   //   () => {
   //     console.log(`title: ${todoApp.title}`)
-  //   })
+  //   }, [todoApp.title])
 
   // useEffect(
   //   () => {
@@ -72,6 +72,7 @@ export const App = () => {
     // )
   }
 
+  //Function create auto random color for colorTitle & colorEffect
   const autoRandomColor = () => {
     const colorR = Math.floor(Math.random() * 256)
     const colorG = Math.floor(Math.random() * 256)
@@ -81,8 +82,16 @@ export const App = () => {
     )
   }
 
-
-
+  //Sử dụng UseEffect để kết hợp render lại các state thay đổi
+  useEffect(() => {
+    setTimeout(() => {
+      setColorEffects(colorEffect = autoRandomColor())
+      setTodoApp({
+        ...todoApp,
+        colorTitle: autoRandomColor(),
+      })
+    }, 1000)
+  }, [colorEffect])
 
   //TODO: Set color for effect
   const setColorEffect = () => {
