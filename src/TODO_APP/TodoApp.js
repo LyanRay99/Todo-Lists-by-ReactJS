@@ -1,85 +1,80 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Item } from './Item'
 import '../CSS/style.css'
 
-export class TodoApp extends React.Component {
-    colorTitle = this.props.todoApp.colorTitle;
-    render() {
-        return (
-            <div className='title'>
-                <h1 style={{ color: this.props.todoApp.colorTitle }}>{this.props.todoApp.title}</h1>
-            </div>
-        )
-    }
-}
+export const TodoApp = (props) => {
 
-export class InputTodo extends React.Component {
-    state = {
-        names: "",
-    }
-
-    changValue = (textInput) => {
-        this.setState({
-            names: textInput.target.value
-        })
-    }
-
-    render() {
-        return (
-            <div className='inputTodo'>
-                <input
-                    type='text'
-                    placeholder='Input Todo'
-                    value={this.state.names}
-                    onChange={this.changValue}
-                ></input>
-                <button onClick={() => (
-                    this.props.handlerAdd(this.state.names),
-                    this.setState({
-                        names: ""
-                    })
-                )}
-                >Add</button>
-            </div >
-        )
-    }
+    return (
+        <div className='title'>
+            <h1 style={{
+                color: props.colorTitle
+            }}>
+                {props.title}
+            </h1>
+        </div>
+    )
 }
 
 
-export class Lists extends React.Component {
-    render() {
-        return (
-            <div className='lists'>
-                {
-                    this.props.todo.map(
-                        (x) => (
-                            <Item
-                                key={x.id}
-                                todo={x}
-                                checkTodo={this.props.checkTodo}
-                                handlerDelete={this.props.handlerDelete}
-                            />
-                        )
+export const InputTodo = (props) => {
+    const [names, setNames] = useState('')
+
+    const changValue = (textInput) => {
+        console.log(names)
+        setNames(
+            textInput.target.value
+        )
+    }
+
+    return (
+        <div className='inputTodo'>
+            <input
+                type='text'
+                placeholder='Input Todo'
+                value={names}
+                onChange={changValue}
+            ></input>
+            <button onClick={() => {
+                props.handlerAdd(names);
+                setNames('')
+            }}
+            >Add</button>
+        </div >
+    )
+}
+
+
+
+export const Lists = (props) => {
+    return (
+        <div className='lists'>
+            {
+                props.todo.map(
+                    (x) => (
+                        <Item
+                            key={x.id}
+                            todo={x}
+                            checkTodo={props.checkTodo}
+                            handlerDelete={props.handlerDelete}
+                        />
                     )
-                }
-            </div>
-        )
-    }
+                )
+            }
+        </div>
+    )
 }
 
-export class SetColor extends React.Component {
-    render() {
-        // console.log(this.props.SetColor);
-        return (
-            <div className='setColor'>
-                <button onClick={this.props.setColorTitle}>Set Color Title</button>
-                <button onClick={this.props.setColorEffect}>Set Color Effect</button>
-            </div>
-        )
-    }
 
+export const SetColor = (props) => {
 
+    return (
+        <div className='setColor'>
+            <button onClick={props.setColorTitle}>Set Color Title</button>
+            <button onClick={props.setColorEffect}>Set Color Effect</button>
+        </div>
+    )
 }
+
 
 //TODO: Effects
 export class AppEffect extends React.Component {
