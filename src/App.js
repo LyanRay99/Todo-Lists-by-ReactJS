@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { v4 } from 'uuid'
+import axios from "axios"
 import { TodoApp, InputTodo, Lists } from './TODO_APP/TodoApp';
 import { AppEffect, SetColor } from './TODO_APP/TodoApp';
-import { v4 } from 'uuid'
 import '../src/CSS/style.css'
 
 //TODO: CLASS COMPONENT
@@ -13,26 +14,37 @@ export const App = () => {
   var [colorEffect, setColorEffects] = useState('aqua')
   const [state, setTodo] = useState(
     {
-      todo: [{
-        id: v4(),
-        name: 'HTML',
-        check: false,
-        checkTodo: 'none',
-      },
-      {
-        id: v4(),
-        name: 'CSS',
-        check: false,
-        checkTodo: 'none',
-      },
-      {
-        id: v4(),
-        name: 'Javascript',
-        check: true,
-        checkTodo: 'line-through',
-      }
+      todo: [
+        // {
+        //   id: v4(),
+        //   name: 'HTML',
+        //   check: false,
+        //   checkTodo: 'none',
+        // },
+        // {
+        //   id: v4(),
+        //   name: 'CSS',
+        //   check: false,
+        //   checkTodo: 'none',
+        // },
+        // {
+        //   id: v4(),
+        //   name: 'Javascript',
+        //   check: true,
+        //   checkTodo: 'line-through',
+        // }
       ]
     })
+
+  useEffect(() => {
+    axios.get('https://jsonplaceholder.typicode.com/todos')
+      .then(response => response.data)
+      .then(json => {
+        setTodo({
+          todo: json
+        });
+      })
+  }, [])
 
   //TODO: Test UseEffect
   // useEffect(
@@ -107,8 +119,8 @@ export const App = () => {
       todo: state.todo.map(
         todo => {
           if (todo.id === id) {
-            todo.check = !todo.check;
-            todo.checkTodo === 'none' ? todo.checkTodo = 'line-through' : todo.checkTodo = 'none';
+            todo.completed = !todo.completed;
+            // todo.checkTodo === 'none' ? todo.checkTodo = 'line-through' : todo.checkTodo = 'none';
           }
           return todo;
         }
@@ -118,37 +130,48 @@ export const App = () => {
 
   //TODO: Add todo into lists
   const handlerAdd = (name) => {
+    //check text input có bị trùng với 1 trong các todo đã có hay ko
     var checkTodoText = true;
     state.todo.map(todo => {
-      if (todo.name === name) {
+      if (todo.title === name) {
         checkTodoText = false
       }
     })
 
+    //Check text input có phải toàn space hay ko
     var checkSpaceText = name.replace(/\s/g, "").length;
 
     if (name !== "" && checkTodoText === true && checkSpaceText) {
       var addCV = {
-        id: v4(),
-        name: name,
-        check: false,
-        checkTodo: 'none',
+        // id: v4(),
+        title: name,
+        completed: false,
+        // checkTodo: 'none',
       }
 
-      setTodo({
-        todo: [...state.todo, addCV]
-      })
+      //gọi API add todo vào list
+      axios.post('https://jsonplaceholder.typicode.com/todos')
+        .then(response => response.data)
+        .then(json => {
+          setTodo({
+            todo: [...state.todo, addCV]
+          })
+        })
     }
   }
 
-
   //TODO: Delete todo in lists
   const handlerDelete = (id) => {
-    setTodo({
-      todo: [...state.todo.filter(todo => {
-        return todo.id !== id;
-      })]
-    })
+    //gọi API delete todo khỏi list
+    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      .then(response => response.data)
+      .then(json => {
+        setTodo({
+          todo: [...state.todo.filter(todo => {
+            return todo.id !== id;
+          })]
+        })
+      })
   }
 
   return (
