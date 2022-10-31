@@ -14,53 +14,20 @@ export const App = () => {
   var [colorEffect, setColorEffects] = useState('aqua')
   const [state, setTodo] = useState(
     {
-      todo: [
-        // {
-        //   id: v4(),
-        //   name: 'HTML',
-        //   check: false,
-        //   checkTodo: 'none',
-        // },
-        // {
-        //   id: v4(),
-        //   name: 'CSS',
-        //   check: false,
-        //   checkTodo: 'none',
-        // },
-        // {
-        //   id: v4(),
-        //   name: 'Javascript',
-        //   check: true,
-        //   checkTodo: 'line-through',
-        // }
-      ]
+      todo: []
     })
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/todos')
-      .then(response => response.data)
-      .then(json => {
+    fetch('http://localhost:8000/todo')
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
         setTodo({
-          todo: json
-        });
+          todo: data
+        })
       })
   }, [])
-
-  //TODO: Test UseEffect
-  // useEffect(
-  //   () => {
-  //     console.log(`title: ${todoApp.title}`)
-  //   }, [todoApp.title])
-
-  // useEffect(
-  //   () => {
-  //     console.log(`color title: ${todoApp.colorTitle}`)
-  //   }, [todoApp.colorTitle])
-
-  // useEffect(
-  //   () => {
-  //     console.log(`effect: ${todoApp.colorEffect}`)
-  //   }, [todoApp.colorEffect])
 
   //TODO: Set color for title
   const setColorTitle = () => {
@@ -68,20 +35,10 @@ export const App = () => {
     const colorG = Math.floor(Math.random() * 256)
     const colorB = Math.floor(Math.random() * 256)
 
-    //Cách set colortitle thứ nhất (dùng Rest Operator)
     setTodoApp({
       ...todoApp,
       colorTitle: `rgb(${colorR}, ${colorG},${colorB})`,
     })
-
-    //Cách set colortitle thứ hai (cách này sẽ dài dòng hơn nhưng nó ko làm render lại những value ko thay đổi)
-    // setTodoApp(
-    //   {
-    //     title: 'TODO APP',
-    //     colorTitle: colorAblum[colorRandom],
-    //     colorEffect: todoApp.colorEffect,
-    //   }
-    // )
   }
 
   //Function create auto random color for colorTitle & colorEffect
@@ -143,16 +100,24 @@ export const App = () => {
 
     if (name !== "" && checkTodoText === true && checkSpaceText) {
       var addCV = {
-        // id: v4(),
+        userId: v4(),
+        id: v4(),
         title: name,
         completed: false,
-        // checkTodo: 'none',
       }
-
+      console.log(JSON.stringify(addCV))
       //gọi API add todo vào list
-      axios.post('https://jsonplaceholder.typicode.com/todos')
-        .then(response => response.data)
-        .then(json => {
+      fetch('http://localhost:8000/todo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(addCV)
+      })
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
           setTodo({
             todo: [...state.todo, addCV]
           })
@@ -163,9 +128,14 @@ export const App = () => {
   //TODO: Delete todo in lists
   const handlerDelete = (id) => {
     //gọi API delete todo khỏi list
-    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .then(response => response.data)
-      .then(json => {
+    fetch(`http://localhost:8000/todo/${id}`, {
+      method: 'DELETE',
+      body: JSON.stringify(id)
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
         setTodo({
           todo: [...state.todo.filter(todo => {
             return todo.id !== id;
