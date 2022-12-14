@@ -16,19 +16,19 @@ body {
 }
 
 section {
-  @include size(500px, 650px);
+  @include size(1200px, 600px);
   margin: auto;
-  margin-top: calc((100vh - 650px) / 2);
+  margin-top: calc((100vh - 600px) / 2);
   position: relative;
   overflow: hidden;
   border-radius: 20px;
+  // border: 2px solid red;
 
   .app__node {
     @include size(97%, 98%);
     padding: 20px;
     border-radius: 20px;
-    background-color: black;
-    background-color: $bgc;
+    // background-color: $bgc;
     position: absolute;
     top: 1%;
     left: 1.5%;
@@ -36,71 +36,40 @@ section {
     // overflow: scroll;
 
     .title {
-      text-align: center;
-      // color: white;
-      // position: fixed;
+      @include size(200px, auto);
+      margin: auto;
     }
 
     .inputTodo {
-      @include size(100%, 30px);
-      margin: 20px 0px;
+      @include size(96.5%, 30px);
+      margin: 20px auto;
       border-radius: 20px;
 
       input {
         @include size(80%, 100%);
+        height: calc(100% + 0.01px);
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
         padding: 0px 10px;
         outline: none;
-        border: none;
+        // border: none;
       }
 
       button {
-        @include size(20%, 100%);
+        @include size(10%, 100%);
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
-        border: none;
-        background-color: greenyellow;
-        color: $bgc;
+        border: 2px solid white;
+        // background-color: greenyellow;
+        // color: $bgc;
         font-size: 0.8em;
         font-weight: bold;
         cursor: pointer;
       }
-    }
 
-    .lists {
-      @include size(100%, 73%);
-      // background-color: rebeccapurple;
-      margin: 20px 0px;
-      padding: 5px 10px;
-      overflow: auto;
-
-      &__node {
-        @include size(100%, auto);
-        display: flex;
-        margin: 0px 0px 20px 0px;
-
-        input {
-          @include size(5%, auto);
-          cursor: pointer;
-        }
-
-        p {
-          @include size(80%, auto);
-          margin: 2px 10px 0px 10px;
-          font-weight: bold;
-          color: white;
-          // line-height: 5px;
-          // overflow: hidden;
-        }
-
-        div {
-          color: white;
-          font-weight: bold;
-          font-size: 1.5em;
-          margin: -5px 0px 0px 0px;
-          cursor: pointer;
-        }
+      .updateBtn {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
       }
     }
 
@@ -110,13 +79,51 @@ section {
       justify-content: space-around;
 
       button {
-        @include size(48%, 100%);
+        @include size(100px, 100%);
         border: none;
         border-radius: 10px;
-        background-color: greenyellow;
-        color: black;
+        // background-color: greenyellow;
+        // color: black;
         font-weight: bold;
         cursor: pointer;
+      }
+    }
+    .listTotal {
+      @include size(50%, auto);
+
+      .lists {
+        @include size(95%, 400px);
+        // background-color: rebeccapurple;
+        margin: 20px 0px;
+        padding: 5px;
+        overflow: auto;
+
+        &__node {
+          @include size(100%, auto);
+          display: flex;
+          margin: 0px 0px 20px 0px;
+
+          input {
+            @include size(5%, auto);
+            cursor: pointer;
+          }
+
+          p {
+            @include size(70%, auto);
+            margin: 2px 10px 0px 10px;
+            font-weight: bold;
+            // color: white;
+          }
+
+          div {
+            @include size(20%, auto);
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin: -5px 0px 0px 0px;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
@@ -126,8 +133,8 @@ section {
     display: flex;
     flex-wrap: wrap;
     position: absolute;
-    top: -250px;
-    left: -150px;
+    top: -300px;
+    left: -500px;
     z-index: 1;
     animation: appEffect 4s linear infinite;
 
@@ -152,4 +159,20 @@ section {
   from {
     transform: rotate(360deg);
   }
+}
+
+//* Custom Scrollbar
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: white;
+  // box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: greenyellow;
+  border-radius: 10px;
 }
