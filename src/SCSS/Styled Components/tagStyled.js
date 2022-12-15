@@ -17,6 +17,9 @@ export const DarkTheme = {
   list: {
     color: "white",
   },
+  effect: {
+    background: "greenyellow",
+  },
 };
 
 export const LightTheme = {
@@ -33,6 +36,9 @@ export const LightTheme = {
   },
   list: {
     color: "black",
+  },
+  effect: {
+    background: "red",
   },
 };
 
@@ -84,4 +90,8 @@ export const Content = styled.p`
 export const Title = styled.h2`
   color: ${(props) => props.theme.title.color};
   text-align: center;
+`;
+
+export const SpinEffect = styled.span`
+  background-color: ${(props) => props.theme.effect.background};
 `;

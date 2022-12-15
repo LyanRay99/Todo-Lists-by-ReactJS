@@ -10,6 +10,7 @@ import {
   DarkTheme,
   LightTheme,
   ContainerList,
+  SpinEffect,
 } from "./SCSS/Styled Components/tagStyled";
 import { ThemeProvider } from "styled-components";
 
@@ -241,18 +242,12 @@ export const App = () => {
           </ContainerList>
         </AppNode>
 
-        {/* <div className="effect">
-          <span
-            className="effect__bgc"
-            style={{ backgroundColor: colorEffect }}
-          ></span>
+        <div className="effect">
+          <SpinEffect></SpinEffect>
           <span className="effect__black"></span>
           <span className="effect__black"></span>
-          <span
-            className="effect__bgc"
-            style={{ backgroundColor: colorEffect }}
-          ></span>
-        </div> */}
+          <SpinEffect></SpinEffect>
+        </div>
       </section>
     </ThemeProvider>
   );
