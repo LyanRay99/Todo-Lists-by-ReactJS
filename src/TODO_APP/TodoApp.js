@@ -31,22 +31,24 @@ export const InputTodo = (props) => {
         }}
       ></InputTodoList>
 
-      <SetBtn
-        className="updateBtn"
-        onClick={() => {
-          props.updateTodo(props.updatedTodo);
-        }}
-      >
-        Update
-      </SetBtn>
-
-      <SetBtn
-        onClick={() => {
-          props.handlerAdd(props.updatedTodo.title);
-        }}
-      >
-        Add
-      </SetBtn>
+      {props.btnUpdate === false ? (
+        <SetBtn
+          className="updateBtn"
+          onClick={() => {
+            props.updateTodo(props.updatedTodo);
+          }}
+        >
+          Update
+        </SetBtn>
+      ) : (
+        <SetBtn
+          onClick={() => {
+            props.handlerAdd(props.updatedTodo.title);
+          }}
+        >
+          Add
+        </SetBtn>
+      )}
     </div>
   );
 };

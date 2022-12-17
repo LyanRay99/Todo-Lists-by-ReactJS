@@ -21,6 +21,7 @@ export const App = () => {
     id: "",
     title: "",
   });
+  const [btnUpdate, setBtnUpdate] = useState(true);
   const [theme, setTheme] = useState(DarkTheme);
 
   //TODO: Call API để binding data (đã edit thành Data cứng được import từ file json)
@@ -110,18 +111,20 @@ export const App = () => {
 
   //TODO: Add todo into lists
   const handlerAdd = (name) => {
-    //check text input có bị trùng với 1 trong các todo đã có hay ko
+    //* check text input có bị trùng với 1 trong các todo đã có hay ko
     var checkTodoText = true;
-    todo.map((todo) => {
+    var SttTodo = 0;
+    todo.map((todo, index) => {
       if (todo.title === name) {
         checkTodoText = false;
+        SttTodo = index + 1;
       }
     });
 
-    //Check text input có phải toàn space hay ko
+    //* Check text input có phải toàn space hay ko
     var checkSpaceText = name.replace(/\s/g, "").length;
 
-    if (name !== "" && checkTodoText === true && checkSpaceText) {
+    if (name !== "" && checkTodoText && checkSpaceText) {
       var addCV = {
         id: v4(),
         title: name,
@@ -129,6 +132,15 @@ export const App = () => {
       };
 
       setTodo([...todo, addCV]);
+    }
+
+    //* Hiển thị thông báo khi User thêm title todo bị trùng hoặc chỉ chứa toàn dấu space
+    if (name === "" || checkSpaceText === 0) {
+      alert("Vui lòng nhập công việc bạn cần làm vào ô dưới");
+    } else if (checkTodoText === false) {
+      alert(
+        `Công việc của bạn hiện đang bị trùng với công việc tại dòng thứ ${SttTodo}`
+      );
     }
 
     //* Reset lại ô Input
@@ -161,24 +173,54 @@ export const App = () => {
       id: itemUpdate.id,
       title: itemUpdate.title,
     });
+
+    //* set state của btnUpdate lại thành false để render ra nút Update
+    setBtnUpdate(false);
   };
 
   //TODO: Updated Todo
   const updateTodo = (itemUpdate) => {
-    setTodo(
-      todo.filter((item) => {
-        if (item.id === itemUpdate.id) {
-          item.title = itemUpdate.title;
-        }
-        return todo;
-      })
-    );
+    //* check text input có bị trùng với 1 trong các todo đã có hay ko
+    var checkTodoText = true;
+    var SttTodo = 0;
+    todo.map((todo, index) => {
+      if (todo.title === itemUpdate.title) {
+        checkTodoText = false;
+        SttTodo = index + 1;
+      }
+    });
+
+    //* Check text input có phải toàn space hay ko
+    var checkSpaceText = itemUpdate.title.replace(/\s/g, "").length;
+
+    if (itemUpdate.title !== "" && checkTodoText && checkSpaceText) {
+      setTodo(
+        todo.filter((item) => {
+          if (item.id === itemUpdate.id) {
+            item.title = itemUpdate.title;
+          }
+          return todo;
+        })
+      );
+    }
+
+    //* Hiển thị thông báo khi User thêm title todo bị trùng hoặc chỉ chứa toàn dấu space
+    if (itemUpdate.title === "" || checkSpaceText === 0) {
+      alert("Vui lòng nhập công việc bạn cần làm vào ô dưới");
+    } else if (checkTodoText === false) {
+      alert(
+        `Công việc của bạn hiện đang bị trùng với công việc tại dòng thứ ${SttTodo}`
+      );
+    }
 
     //* Reset lại ô Input
     setUpdatedTodo({
       id: "",
       title: "",
     });
+
+    //* set state của btnUpdate lại thành true để render ra nút Add
+    setBtnUpdate(true);
   };
 
   //TODO: Completed & Restore todo
@@ -219,6 +261,7 @@ export const App = () => {
             updatedTodo={updatedTodo}
             setUpdatedTodo={setUpdatedTodo}
             updateTodo={updateTodo}
+            btnUpdate={btnUpdate}
           />
 
           <SetColor changeTheme={changeTheme} />
