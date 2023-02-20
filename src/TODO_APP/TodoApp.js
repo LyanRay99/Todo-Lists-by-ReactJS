@@ -1,96 +1,88 @@
-import React from 'react'
-import { Item } from './Item'
-import '../CSS/style.css'
+import React from "react";
+import { Item } from "./Item";
+import "../SCSS/style.scss";
+import {
+  MainTitle,
+  SetBtn,
+  InputTodoList,
+  Title,
+} from "../SCSS/Styled Components/tagStyled";
 
-export class TodoApp extends React.Component {
-    colorTitle = this.props.todoApp.colorTitle;
-    render() {
-        return (
-            <div className='title'>
-                <h1 style={{ color: this.props.todoApp.colorTitle }}>{this.props.todoApp.title}</h1>
-            </div>
-        )
-    }
-}
+export const TodoApp = (props) => {
+  return (
+    <div className="title">
+      <MainTitle>TODO APP</MainTitle>
+    </div>
+  );
+};
 
-export class InputTodo extends React.Component {
-    state = {
-        names: "",
-    }
+export const InputTodo = (props) => {
+  return (
+    <div className="inputTodo">
+      <InputTodoList
+        type="text"
+        placeholder="Input Todo"
+        value={props.updatedTodo.title}
+        onChange={(e) => {
+          props.setUpdatedTodo({
+            id: props.updatedTodo.id,
+            title: e.target.value,
+          });
+        }}
+      ></InputTodoList>
 
-    changValue = (textInput) => {
-        this.setState({
-            names: textInput.target.value
-        })
-    }
+      {props.btnUpdate === false ? (
+        <SetBtn
+          className="updateBtn"
+          onClick={() => {
+            props.updateTodo(props.updatedTodo);
+          }}
+        >
+          Update
+        </SetBtn>
+      ) : (
+        <SetBtn
+          onClick={() => {
+            props.handlerAdd(props.updatedTodo.title);
+          }}
+        >
+          Add
+        </SetBtn>
+      )}
+    </div>
+  );
+};
 
-    render() {
-        return (
-            <div className='inputTodo'>
-                <input
-                    type='text'
-                    placeholder='Input Todo'
-                    value={this.state.names}
-                    onChange={this.changValue}
-                ></input>
-                <button onClick={() => (
-                    this.props.handlerAdd(this.state.names),
-                    this.setState({
-                        names: ""
-                    })
-                )}
-                >Add</button>
-            </div >
-        )
-    }
-}
+export const Lists = (props) => {
+  return (
+    <div className="listTotal" style={{ display: "block" }}>
+      {props.listTodo === "Task List" ? (
+        <Title>Task List</Title>
+      ) : (
+        <Title>Deleted List</Title>
+      )}
+      <div className="lists">
+        {props.todo.map((x, index) => (
+          <Item
+            key={x.id}
+            index={index}
+            todo={x}
+            checkTodo={props.checkTodo}
+            handlerDelete={props.handlerDelete}
+            listTodo={props.listTodo}
+            exchangeTodo={props.exchangeTodo}
+            editTodo={props.editTodo}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
-
-export class Lists extends React.Component {
-    render() {
-        return (
-            <div className='lists'>
-                {
-                    this.props.todo.map(
-                        (x) => (
-                            <Item
-                                key={x.id}
-                                todo={x}
-                                checkTodo={this.props.checkTodo}
-                                handlerDelete={this.props.handlerDelete}
-                            />
-                        )
-                    )
-                }
-            </div>
-        )
-    }
-}
-
-export class SetColor extends React.Component {
-    render() {
-        // console.log(this.props.SetColor);
-        return (
-            <div className='setColor'>
-                <button onClick={this.props.setColorTitle}>Set Color Title</button>
-                <button onClick={this.props.setColorEffect}>Set Color Effect</button>
-            </div>
-        )
-    }
-
-
-}
-
-//TODO: Effects
-export class AppEffect extends React.Component {
-    render() {
-        return (
-            <div className='appEffect'>
-                <div className='appEffect__bgc'></div>
-                <div className='appEffect__black'></div>
-                <div className='appEffect__black'></div>
-                <div className='appEffect__bgc'></div>
-            </div>
-        )
-    }
-}
+export const SetColor = (props) => {
+  return (
+    <div className="setColor">
+      <SetBtn onClick={props.changeTheme}>Set Theme</SetBtn>
+    </div>
+  );
+};
