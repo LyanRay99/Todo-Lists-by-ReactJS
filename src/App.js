@@ -4,7 +4,8 @@ import DataTodo from "../src/database/todo.json";
 import DataTodoDeleted from "../src/database/todoDeleted.json";
 import { TodoApp, InputTodo, Lists } from "./TODO_APP/TodoApp";
 import { SetColor } from "./TODO_APP/TodoApp";
-import "../src/SCSS/style.scss";
+import "./SCSS/style.scss";
+import "./SCSS/Responsive/responsive.scss";
 import {
   AppNode,
   DarkTheme,
@@ -287,8 +288,8 @@ export const App = () => {
 
         <div className="effect">
           <SpinEffect></SpinEffect>
-          <span className="effect__black"></span>
-          <span className="effect__black"></span>
+          <div className="effect__black"></div>
+          <div className="effect__black"></div>
           <SpinEffect></SpinEffect>
         </div>
       </section>

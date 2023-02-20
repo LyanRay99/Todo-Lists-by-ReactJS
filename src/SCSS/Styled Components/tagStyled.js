@@ -92,6 +92,6 @@ export const Title = styled.h2`
   text-align: center;
 `;
 
-export const SpinEffect = styled.span`
+export const SpinEffect = styled.div`
   background-color: ${(props) => props.theme.effect.background};
 `;

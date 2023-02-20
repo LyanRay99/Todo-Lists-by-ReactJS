@@ -1,0 +1,38 @@
+@media screen and (max-width: 1250px) {
+  section {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  section {
+    .app__node {
+      .sc-hLBbgP {
+        height: 380px;
+        overflow-y: scroll;
+
+        .listTotal {
+          width: 100%;
+
+          .lists {
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .title h1 {
+    font-size: 1.2em;
+  }
+
+  .sc-ftTHYK {
+    font-size: 1.2em;
+  }
+
+  .sc-iBYQkv {
+    font-size: 0.7em !important;
+  }
+}
