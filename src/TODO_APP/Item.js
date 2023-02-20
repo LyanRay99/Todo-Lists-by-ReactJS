@@ -15,21 +15,23 @@ import {
 export const Item = (props) => {
   return (
     <div className="lists__node">
-      <input
-        type="checkbox"
-        checked={props.todo.completed}
-        onChange={() => props.checkTodo(props.todo.id)} //todo: đưa function đã tạo tạo 1 arrow function để nó ko bị lặp vô hạn
-      ></input>
+      <div className="lists__node__childs">
+        <input
+          type="checkbox"
+          checked={props.todo.completed}
+          onChange={() => props.checkTodo(props.todo.id)} //todo: đưa function đã tạo tạo 1 arrow function để nó ko bị lặp vô hạn
+        ></input>
 
-      <Content
-        style={
-          props.todo.completed === true
-            ? { textDecoration: "line-through" }
-            : {}
-        }
-      >
-        {props.todo.title}
-      </Content>
+        <Content
+          style={
+            props.todo.completed === true
+              ? { textDecoration: "line-through" }
+              : {}
+          }
+        >
+          {props.todo.title}
+        </Content>
+      </div>
 
       <ContainerIcon>
         {props.listTodo === "Task List" ? (
